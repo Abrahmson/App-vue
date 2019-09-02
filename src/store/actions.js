@@ -19,6 +19,7 @@ export default {
     if (result.code === 0) {
       const categorys = result.data
       commit(GET_CATEGORYS, categorys)
+      // typeof fun === 'function' || fun()
     }
   },
   async getShops ({commit, state}){
