@@ -2,13 +2,17 @@
   <section class="profile">
     <Header title="我的"></Header>
     <section class="profile-number">
-      <a href="javascript:" class="profile-link" @click="$router.push('/login')">
+      <a
+        href="javascript:"
+        class="profile-link"
+        @click="user._id?($router.push('/userinfo')):($router.push('/login'))"
+      >
         <div class="profile_image">
           <i class="iconfont icon-person"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top">登录/注册</p>
-          <p>
+          <p class="user-info-top">{{user._id?(user.phone?user.phone:user.name):('登录/注册')}}</p>
+          <p v-show="!user._id">
             <span class="user-icon">
               <i class="iconfont icon-shouji icon-mobile"></i>
             </span>
@@ -80,7 +84,7 @@
         </div>
       </a>
     </section>
-    <section class="profile_my_order border-1px">
+    <section class="profile_my_order border-1px" style="margin-bottom:20px">
       <!-- 服务中心 -->
       <a href="javascript:" class="my_order">
         <span>
@@ -94,16 +98,38 @@
         </div>
       </a>
     </section>
+    <mt-button type="danger" style="width:100%" @click="loginOut" v-show="user._id">退 出</mt-button>
   </section>
 </template>
 
 <script>
+// 引入mapState，拿到user
+import { mapState } from "vuex";
+import { MessageBox } from 'mint-ui';
+
+
 export default {
+  computed: {
+    ...mapState(["user"])
+  },
+  methods: {
+    loginOut() {
+      MessageBox.confirm("请问确定退出登入吗?").then(
+        () => {
+          // const user = {};
+          // this.$store.commit(GET_USER, user);
+          // reqLogout();
+          this.$store.dispatch('resetUser')
+        },
+        () => {}
+      );
+    }
+  }
 };
 </script>
 
 <style lang="stylus">
-@import "../../common/stylus/mixins.styl"
+@import '../../common/stylus/mixins.styl'
 .profile // 我的
   width: 100%
   .profile-number

@@ -7,6 +7,10 @@ import router from './router/index.js'
 import Header from './components/Herder/Header.vue'
 // 引入star
 import Star from './components/Star/Star.vue'
+// 引入validate文件
+import './validate.js';
+// 引入mint-ui
+import { Button } from 'mint-ui';
 
 // 引入store仓库
 import store from './store'
@@ -14,6 +18,8 @@ import store from './store'
 // 注册全局组件
 Vue.component('Header', Header)
 Vue.component('Star', Star)
+// 注册全局组件
+Vue.component(Button.name, Button);
 
 Vue.config.productionTip = false
 

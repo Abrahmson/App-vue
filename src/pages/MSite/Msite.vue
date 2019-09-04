@@ -6,7 +6,7 @@
         <i class="iconfont icon-sousuo"></i>
       </span>
       <span class="header_login" slot="right">
-        <span class="header_login_text">登录|注册</span>
+        <span class="header_login_text">{{user._id?(user.phone?user.phone:user.name):('登录/注册')}}</span>
       </span>
     </Header>
     <!--首页导航-->
@@ -55,17 +55,19 @@ export default {
     this.$store.dispatch("getShops");
     // 获取食品分类
     await this.$store.dispatch("getCategorys");
-    /* eslint-disable no-new */
-    new Swiper(".swiper-container", {
-      loop: true, // 循环模式选项
-      // 如果需要分页器
-      pagination: {
-        el: ".swiper-pagination"
-      }
+    this.$nextTick(() => {
+      /* eslint-disable no-new */
+      new Swiper(".swiper-container", {
+        loop: true, // 循环模式选项
+        // 如果需要分页器
+        pagination: {
+          el: ".swiper-pagination"
+        }
+      });
     });
   },
   computed: {
-    ...mapState(["address", "shops", "categorys"]),
+    ...mapState(["address", "shops", "categorys","user"]),
     categorysList() {
       const bigArr = [];
       let smallArr = [];

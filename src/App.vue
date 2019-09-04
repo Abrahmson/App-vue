@@ -7,7 +7,8 @@
 
 <script>
 // 引入API接口
-// import {reqAddress} from './api';
+import {reqUser} from './api';
+import {GET_USER} from './store/mutations_types.js';
 
 import FooterGuide from './components/FooterGuide/FooterGuide.vue';
 export default {
@@ -15,10 +16,17 @@ export default {
   components: {
     FooterGuide
   },
-  mounted () {
+  async mounted () {
     // const result = await reqAddress('116.36867', '40.10038');
     // console.log(result)
     this.$store.dispatch('getAddress')
+    // 免登入操作
+    const result = await reqUser()
+    if (result.code===0) {
+      const user = result.data
+      this.$store.commit(GET_USER,user)
+    }
+
   }
 }
 
